@@ -1,0 +1,14 @@
+# Python Environment Folders
+hack_env/
+.venv/
+
+# Python Compilation and Temporary Files
+__pycache__/
+*.pyc
+
+# IDE/System Files
+.vscode/
+.DS_Store
+
+# Flask Session Files
+*.session
