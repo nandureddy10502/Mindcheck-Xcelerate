@@ -1,27 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='static.css') }}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MindCheck - Student Wellness Check-in</title>
-    <title>MindCheck - Student Wellness Check-in</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='static.css') }}">
 </head>
+
 <body>
-    <h1>MindCheck: Daily Check-in</h1>
-    <p>Rate your mood and share a quick thought. (<a href="/history">View History</a>)</p>
+    <header class="head-bg">
+        <a href="#sectionbreathing">
+            <h1 class="header-head">MindCheck: Daily Check-in</h1>
+        </a>
+    </header>
 
-    <form action="/submit_checkin" method="POST">
-        <label for="mood">Your Mood Score (1=Bad, 5=Great):</label><br>
-        <input type="range" id="mood" name="mood_score" min="1" max="5" value="3" oninput="document.getElementById('moodValue').innerText=this.value">
-        <span id="moodValue">3</span><br><br>
+    <br>
+    <br>
 
-        <label for="note">Quick Note:</label><br>
-        <textarea id="note" name="quick_note" rows="4" cols="50" placeholder="E.g., Stressed about exam, feeling motivated, etc."></textarea><br><br>
+    <div class="except-header">
+        <div class="breathing-section" id="sectionbreathing">
+            <div class="header">
+                <h1 class="breathing-heading">Breathing Exercise</h1>
+                <p class="subtitle">Take a moment to center yourself</p>
+            </div>
 
-        <button type="submit">Check In</button>
-    </form>
+
+            <!-- Breathing Animation Container -->
+            <div class="breathing-container">
+
+                <!-- Main Circle with Text -->
+                <div class="breathing-circle">
+                    <span class="breathing-text">Breathe</span>
+                </div>
+
+                <!-- Animated Ripple Rings -->
+                <div class="ripple-ring ring-1"></div>
+                <div class="ripple-ring ring-2"></div>
+                <div class="ripple-ring ring-3"></div>
+            </div>
+
+            <!-- Instruction Text (Changes with Animation) -->
+            <div class="breathing-instruction">
+                <span class="breath-step step-inhale">Breathe In</span>
+
+                <span class="breath-step step-hold">Hold</span>
+
+                <span class="breath-step step-exhale">Breathe Out</span>
+            </div>
+
+            <!-- Additional Info -->
+            <div class="info-box">
+                <p class="info-text">
+                    <strong>4-4-4 Breathing:</strong>
+                    Inhale for 4 seconds, hold for 4 seconds, exhale for 4 seconds
+                </p>
+            </div>
+        </div>
+
+
+
+        <p>Rate your mood and share a quick thought. (<a href="/history">View History</a>)</p>
+
+        <form action="/submit_checkin" method="POST">
+            <label for="mood">Your Mood Score (1=Bad, 5=Great):</label><br>
+            <input type="range" id="mood" name="mood_score" min="1" max="5" value="3" oninput="document.getElementById('moodValue').innerText=this.value">
+            <span id="moodValue">3</span><br><br>
+
+            <label for="note">Quick Note:</label><br>
+            <textarea id="note" name="quick_note" rows="4" cols="50" placeholder="E.g., Stressed about exam, feeling motivated, etc."></textarea><br><br>
+
+            <button type="submit">Check In</button>
+        </form>
+
+    </div>
 
 </body>
+
 </html>
