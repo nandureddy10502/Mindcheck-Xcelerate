@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindCheck - Check-in History</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>MindCheck - Student Wellness Check-in</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <a href="/">← Back to Check-in</a>
+    <h1>Your Wellness History</h1>
+    
+    {% if checkins %}
+    <table>
+        <thead>
+            <tr>
+                <th>Date & Time</th>
+                <th>Mood Score</th>
+                <th>Quick Note</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entry in checkins %}
+            <tr>
+                <td>{{ entry[0] }}</td>
+                <td>{{ entry[1] }}</td>
+                <td>{{ entry[2] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No check-in data found yet. Submit your first entry!</p>
+    {% endif %}
+
+</body>
+</html>

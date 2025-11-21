@@ -15,7 +15,7 @@ DATA_FILE = 'checkins.csv'
 # 1. Home Page Route: Handles GET requests to the root URL (/)
 @app.route('/')
 def index():
-    # Renders the check-in form. We will add history here later.
+    # Renders the check-in form.
     return render_template('index.html')
 
 
@@ -32,13 +32,14 @@ def submit_checkin():
 
     # Append data to the CSV file
     try:
-        # 'a' means append (add to the end of the file)
-        # 'newline=""' prevents extra blank rows
+        # Check if file exists to decide if we need to write the header
+        write_header = not os.path.exists(DATA_FILE) or os.stat(DATA_FILE).st_size == 0
+        
         with open(DATA_FILE, mode='a', newline='', encoding='utf-8') as file:
             writer = csv.writer(file)
             
-            # Write header only if the file is new/empty (os.stat is how we check file size)
-            if not os.path.exists(DATA_FILE) or os.stat(DATA_FILE).st_size == 0:
+            # Write header only if the file is new/empty
+            if write_header:
                 writer.writerow(['Timestamp', 'Mood Score', 'Note'])
 
             writer.writerow(data)
@@ -50,6 +51,27 @@ def submit_checkin():
 
     # Redirect the user back to the home page after submission
     return redirect(url_for('index'))
+
+
+# 3. History Page Route: Handles GET requests to /history
+@app.route('/history')
+def history():
+    data = []
+    try:
+        # Check if the file exists and has content before trying to read it
+        if os.path.exists(DATA_FILE) and os.stat(DATA_FILE).st_size > 0:
+            with open(DATA_FILE, mode='r', newline='', encoding='utf-8') as file:
+                reader = csv.reader(file)
+                # Skip the header row
+                next(reader, None) 
+                # Convert reader object to a list
+                data = list(reader) 
+        
+    except Exception as e:
+        print(f"Error reading data: {e}")
+        
+    # Pass the list of data to the history.html template
+    return render_template('history.html', checkins=data)
 
 
 # --- RUN APPLICATION ---
