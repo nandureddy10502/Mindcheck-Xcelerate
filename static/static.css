@@ -54,12 +54,18 @@ a:hover {
     padding-bottom: 40px;
 }
 
+
+td:nth-child(2) {
+    font-weight: 700;
+    color: var(--accent-color);
+}
+
 .header-head {
     padding-left: 20px;
 }
 
 .breathing-section {
-    margin-top: 80px;
+    margin-top: 40px;
 }
 
 .breathing-heading {
@@ -534,4 +540,98 @@ td:nth-child(2) {
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
     }
+}
+
+
+
+.history-body-padding{
+    padding: 100px;
+}
+
+/* --- Table Styling (History Page) --- */
+table.history-table { /* Target the table specifically */
+    width: 100%;
+    table-layout: fixed; /* Ensures column widths are respected */
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+table.history-table th, 
+table.history-table td {
+    border: 1px solid var(--border-color);
+    padding: 12px;
+    text-align: left; /* Keep text aligned to the left */
+}
+table.history-table th {
+    background-color: #e9f5f1;
+    color: var(--text-color);
+    font-weight: 700;
+}
+table.history-table tr:nth-child(even) {
+    background-color: #f9fbfb;
+}
+
+/* --- Column Width Definition (CRITICAL for Alignment) --- */
+/* 1. Date & Time Column (entry[0]) */
+table.history-table th:nth-child(1),
+table.history-table td:nth-child(1) {
+    width: 25%; /* Give Timestamp enough room */
+}
+
+/* 2. Mood Score Column (entry[1]) */
+table.history-table th:nth-child(2),
+table.history-table td:nth-child(2) {
+    width: 15%; /* Keep Mood Score column narrow */
+    text-align: center; /* Center the score for easy reading */
+    font-weight: 700;
+    color: var(--accent-color);
+}
+
+/* 3. Quick Note Column (entry[2]) */
+table.history-table th:nth-child(3),
+table.history-table td:nth-child(3) {
+    width: 60%; /* Give the Note the most space */
+}
+
+/* --- Average Mood Display Styles --- */
+.summary-card {
+    background-color: var(--card-background);
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(114, 169, 143, 0.2);
+    margin-top: 25px;
+    border: 1px solid var(--primary-color); /* Highlight border */
+    text-align: center;
+}
+.summary-card h2 {
+    color: var(--text-color);
+    border-bottom: none;
+    padding-bottom: 5px;
+    font-size: 1.2em;
+}
+.average-score {
+    font-size: 3.5em; /* Large number for impact */
+    font-weight: 700;
+    color: var(--accent-color);
+    margin: 10px 0;
+}
+.tip-area {
+    padding: 10px;
+    background-color: #e9f5f1; /* Light background for the tip */
+    border-radius: 8px;
+    font-style: italic;
+    color: var(--primary-color);
+    margin-top: 15px;
+}
+
+/* --- AI Tip Label Style --- */
+.ai-label {
+    display: block;
+    font-weight: 700;
+    color: #2c6f60; /* A darker sage green */
+    margin-bottom: 5px;
+    font-style: normal;
+}
+.tip-area p {
+    font-style: italic;
+    margin: 0;
 }

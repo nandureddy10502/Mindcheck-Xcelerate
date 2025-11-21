@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for
 import datetime
 import csv
 import os
+import time
 
 # --- Configuration ---
 # 1. Initialize the Flask application
@@ -11,6 +12,13 @@ app = Flask(__name__)
 DATA_FILE = 'checkins.csv'
 
 # --- ROUTES ---
+
+# Function to generate a tip based on the average score
+def generate_ai_tip(average):
+    # SIMULATE AI processing time for authenticity
+    time.sleep(1) 
+
+    # ... rest of the tip logic remains the same ...
 
 # 1. Home Page Route: Handles GET requests to the root URL (/)
 @app.route('/')
@@ -57,21 +65,34 @@ def submit_checkin():
 @app.route('/history')
 def history():
     data = []
+    total_score = 0
+    num_entries = 0
+    average_mood = "N/A" # Default value
+
     try:
-        # Check if the file exists and has content before trying to read it
         if os.path.exists(DATA_FILE) and os.stat(DATA_FILE).st_size > 0:
             with open(DATA_FILE, mode='r', newline='', encoding='utf-8') as file:
                 reader = csv.reader(file)
-                # Skip the header row
-                next(reader, None) 
-                # Convert reader object to a list
-                data = list(reader) 
+                next(reader, None) # Skip the header row
+                
+                # Iterate and calculate average while collecting data for the table
+                for row in reader:
+                    data.append(row)
+                    # Row[1] is the Mood Score (which is a string, so we convert to int)
+                    score = int(row[1]) 
+                    total_score += score
+                    num_entries += 1
+                
+                # Calculate the average if there is data
+                if num_entries > 0:
+                    # Round the average to two decimal places for neat display
+                    average_mood = round(total_score / num_entries, 2)
         
     except Exception as e:
-        print(f"Error reading data: {e}")
+        print(f"Error reading or calculating data: {e}")
         
-    # Pass the list of data to the history.html template
-    return render_template('history.html', checkins=data)
+    # Pass BOTH the table data AND the calculated average to the template
+    return render_template('history.html', checkins=data, average_mood=average_mood)
 
 
 # --- RUN APPLICATION ---

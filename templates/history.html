@@ -4,16 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MindCheck - Check-in History</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='static.css') }}">
     <title>MindCheck - Student Wellness Check-in</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <a href="/">← Back to Check-in</a>
+<div class="history-body-padding">
+    <a href="/">← Back to Home Page</a>
     <h1>Your Wellness History</h1>
     
+<div class="summary-card">
+    <h2>Overall Average Mood Score</h2>
+    <p class="average-score">{{ average_mood }}</p>
+    <div class="tip-area">
+        <span class="ai-label">✨ MindCheck AI Insight:</span>
+        <p>{{ ai_tip }}</p>
+    </div>
+</div>
+
     {% if checkins %}
-    <table>
+    <table class="history-table">
         <thead>
             <tr>
                 <th>Date & Time</th>
@@ -34,6 +43,6 @@
     {% else %}
     <p>No check-in data found yet. Submit your first entry!</p>
     {% endif %}
-
+</div>
 </body>
 </html>
