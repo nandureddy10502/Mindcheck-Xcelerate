@@ -6,8 +6,19 @@
     <title>MindCheck - Student Wellness Check-in</title>
 </head>
 <body>
-    <h1>Welcome to MindCheck!</h1>
-    <p>Your Flask server is working correctly.</p>
+    <h1>MindCheck: Daily Check-in</h1>
+    <p>Rate your mood and share a quick thought. (<a href="/history">View History</a>)</p>
 
-    </body>
+    <form action="/submit_checkin" method="POST">
+        <label for="mood">Your Mood Score (1=Bad, 5=Great):</label><br>
+        <input type="range" id="mood" name="mood_score" min="1" max="5" value="3" oninput="document.getElementById('moodValue').innerText=this.value">
+        <span id="moodValue">3</span><br><br>
+
+        <label for="note">Quick Note:</label><br>
+        <textarea id="note" name="quick_note" rows="4" cols="50" placeholder="E.g., Stressed about exam, feeling motivated, etc."></textarea><br><br>
+
+        <button type="submit">Check In</button>
+    </form>
+
+</body>
 </html>
