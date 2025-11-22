@@ -3,6 +3,7 @@ import datetime
 import csv
 import os
 import time
+from pyngrok import ngrok # <--- ADD THIS
 
 # --- Configuration ---
 # 1. Initialize the Flask application
@@ -95,7 +96,35 @@ def history():
     return render_template('history.html', checkins=data, average_mood=average_mood)
 
 
+# 4. Clear History Handler: Handles requests to delete the data
+@app.route('/clear_history', methods=['POST'])
+def clear_history():
+    print("ATTEMPTING TO CLEAR HISTORY...")
+    try:
+        # Check if the file exists before trying to delete it
+        if os.path.exists(DATA_FILE):
+            os.remove(DATA_FILE)
+            print(f"SUCCESS: {DATA_FILE} has been deleted.")
+        else:
+            print("INFO: Data file not found, nothing to delete.")
+            
+    except Exception as e:
+        print(f"ERROR: Could not clear history: {e}") 
+        
+    # Redirect the user back to the empty history page
+    return redirect(url_for('history'))
+
+
+# --- RUN APPLICATION ---
 # --- RUN APPLICATION ---
 if __name__ == '__main__':
-    # 'debug=True' auto-reloads changes and shows errors in the browser
-    app.run(debug=True)
+    # 1. Start ngrok tunnel on port 5000
+    # This will fail if your token wasn't correctly saved!
+    public_url = ngrok.connect(5000).public_url
+    print(f"\n ********************************************************")
+    print(f" * MindCheck Public URL: {public_url}")
+    print(f" * SUBMIT THIS LINK FOR JUDGING: {public_url}")
+    print(f" ********************************************************\n")
+
+    # 2. Run Flask server (Important: use_reloader=False prevents Ngrok from duplicating)
+    app.run(port=5000, debug=True, use_reloader=False)
